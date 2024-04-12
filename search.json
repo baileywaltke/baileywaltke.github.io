@@ -7,18 +7,11 @@
     "text": "About this blog"
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "objectID": "posts/were-the-2023-st-louis-cardinals-an-anomaly/index.html",
+    "href": "posts/were-the-2023-st-louis-cardinals-an-anomaly/index.html",
+    "title": "Were the 2023 St. Louis Cardinals an anomaly?",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+    "text": "The 2022 St. Louis Cardinals won the NL Central Division and made the playoffs for the fourth straight season. Over the offseason, they didn’t make many changes. They lost key veterans in Cardinal legends Yadier Molina and Albert Pujols. However, those players have their own glaring flaws, and the Cardinals filled their void behind home plate with the top free agent catcher on the market, Willson Contreras. Despite the optimism heading into 2023, St. Louis finished dead-last in their weak division.\n\n\nCode\nlibrary(tidyverse)\n\nfielding2022 &lt;- read_csv(\"Fielding2022.csv\")\nfielding2023 &lt;- read_csv(\"Fielding2023.csv\")\n\ngoodfielding &lt;- fielding2022 |&gt; \n  mutate(Season = 2022)\n\nbadfielding &lt;- fielding2023 |&gt;\n  mutate(Season = 2023) \n\nfielding &lt;- bind_rows(goodfielding, badfielding)\n\nstlfield &lt;- fielding |&gt; filter(Tm == \"St. Louis Cardinals\")\nmilfield &lt;- fielding |&gt; filter(Tm == \"Milwaukee Brewers\")\naveragefield &lt;- fielding |&gt; filter(Tm == \"League Average\")\n\nggplot() +\n  geom_line(data=fielding, aes(x=Season, y=`Rdrs/yr`, group=Tm), color=\"grey\") +\n  geom_point(data=fielding, aes(x=Season, y=`Rdrs/yr`, group=Tm), color=\"grey\") +\n  geom_line(data=stlfield, aes(x=Season, y=`Rdrs/yr`, group=Tm), color=\"red\") +\n  geom_point(data=stlfield, aes(x=Season, y=`Rdrs/yr`, group=Tm), color=\"red\") +\n  geom_line(data=averagefield, aes(x=Season, y=`Rdrs/yr`, group=Tm), color=\"black\") +\n  geom_point(data=averagefield, aes(x=Season, y=`Rdrs/yr`, group=Tm), color=\"black\") +\n  geom_line(data=milfield, aes(x=Season, y=`Rdrs/yr`, group=Tm), color=\"darkblue\") +\n  geom_point(data=milfield, aes(x=Season, y=`Rdrs/yr`, group=Tm), color=\"darkblue\") +\n  geom_text(data=stlfield |&gt; filter(Season == max(Season)), aes(x=Season + .27, y=`Rdrs/yr`+.1, group=Tm, label=Tm)) +\n  geom_text(data=stlfield |&gt; filter(Season == min(Season)), aes(x=Season - .27, y=`Rdrs/yr`-.1, group=Tm, label=Tm)) +\ngeom_text(data=milfield |&gt; filter(Season == max(Season)), aes(x=Season + .28, y=`Rdrs/yr`, group=Tm, label=Tm)) +\n  geom_text(data=milfield |&gt; filter(Season == min(Season)), aes(x=Season - .28, y=`Rdrs/yr`, group=Tm, label=Tm)) +\n  geom_text(data=averagefield |&gt; filter(Season == max(Season)), aes(x=Season + .25, y=`Rdrs/yr`, group=Tm, label=Tm)) +\n  geom_text(data=averagefield |&gt; filter(Season == min(Season)), aes(x=Season - .25, y=`Rdrs/yr`, group=Tm, label=Tm)) +\n  scale_x_continuous(breaks=c(2022, 2023), limits=c(2021.5,2023.5)) +\n  theme_minimal()"
   },
   {
     "objectID": "posts/introduction/index.html",
@@ -28,10 +21,24 @@
     "text": "Hello. My name is Bailey Waltke, and I am a broadcasting and sports media major at the College of Journalism and Mass Communications at the University of Nebraska-Lincoln."
   },
   {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Latest posts",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nApr 1, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 1, 2024\n\n\nBailey Waltke\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMar 29, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Were the 2023 St. Louis Cardinals an anomaly?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 12, 2024\n\n\nBailey Waltke\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nApr 1, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 1, 2024\n\n\nBailey Waltke\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMar 29, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   }
 ]
