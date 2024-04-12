@@ -185,50 +185,611 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>The 2022 St.&nbsp;Louis Cardinals won the NL Central Division and made the playoffs for the fourth straight season. Over the offseason, they didn’t make many changes. They lost key veterans in Cardinal legends Yadier Molina and Albert Pujols. However, those players have their own glaring flaws, and the Cardinals filled their void behind home plate with the top free agent catcher on the market, Willson Contreras. Despite the optimism heading into 2023, St.&nbsp;Louis finished dead-last in their weak division.</p>
+<p>The 2022 St.&nbsp;Louis Cardinals won the NL Central Division and made the playoffs for the fourth straight season. Over the offseason, they didn’t make many changes. They lost key veterans in Cardinal legends Yadier Molina and Albert Pujols. However, those players have their own glaring flaws, and the Cardinals filled their void behind home plate with the top free agent catcher on the market, Willson Contreras.</p>
+<p>Despite the optimism heading into 2023, St.&nbsp;Louis finished dead-last in their weak division. So, where did they go wrong?</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fielding2022 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Fielding2022.csv"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>fielding2023 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Fielding2023.csv"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>goodfielding <span class="ot">&lt;-</span> fielding2022 <span class="sc">|&gt;</span> </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2022</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>badfielding <span class="ot">&lt;-</span> fielding2023 <span class="sc">|&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2023</span>) </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>fielding <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(goodfielding, badfielding)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>stlfield <span class="ot">&lt;-</span> fielding <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"St. Louis Cardinals"</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>milfield <span class="ot">&lt;-</span> fielding <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"Milwaukee Brewers"</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>averagefield <span class="ot">&lt;-</span> fielding <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"League Average"</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>fielding, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>fielding, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>stlfield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>stlfield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>averagefield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>averagefield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>milfield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"darkblue"</span>) <span class="sc">+</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>milfield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"darkblue"</span>) <span class="sc">+</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>stlfield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">max</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">+</span> .<span class="dv">27</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span><span class="sc">+</span>.<span class="dv">1</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>stlfield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">min</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">-</span> .<span class="dv">27</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span><span class="sc">-</span>.<span class="dv">1</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_text</span>(<span class="at">data=</span>milfield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">max</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">+</span> .<span class="dv">28</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>milfield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">min</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">-</span> .<span class="dv">28</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>averagefield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">max</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">+</span> .<span class="dv">25</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>averagefield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">min</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">-</span> .<span class="dv">25</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">2022</span>, <span class="dv">2023</span>), <span class="at">limits=</span><span class="fu">c</span>(<span class="fl">2021.5</span>,<span class="fl">2023.5</span>)) <span class="sc">+</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>fielding2022 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Fielding2022.csv"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>fielding2023 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Fielding2023.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>goodfielding <span class="ot">&lt;-</span> fielding2022 <span class="sc">|&gt;</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2022</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>badfielding <span class="ot">&lt;-</span> fielding2023 <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2023</span>) </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>fielding <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(goodfielding, badfielding)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>stlfield <span class="ot">&lt;-</span> fielding <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"St. Louis Cardinals"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>milfield <span class="ot">&lt;-</span> fielding <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"Milwaukee Brewers"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>averagefield <span class="ot">&lt;-</span> fielding <span class="sc">|&gt;</span> <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"League Average"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>fielding, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>fielding, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>stlfield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>stlfield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>averagefield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>averagefield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>milfield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>milfield, <span class="fu">aes</span>(<span class="at">x=</span>Season, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm), <span class="at">color=</span><span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>stlfield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">max</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">+</span> .<span class="dv">27</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span><span class="sc">+</span>.<span class="dv">1</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>stlfield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">min</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">-</span> .<span class="dv">27</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span><span class="sc">-</span>.<span class="dv">1</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_text</span>(<span class="at">data=</span>milfield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">max</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">+</span> .<span class="dv">28</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>milfield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">min</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">-</span> .<span class="dv">28</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>averagefield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">max</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">+</span> .<span class="dv">25</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>averagefield <span class="sc">|&gt;</span> <span class="fu">filter</span>(Season <span class="sc">==</span> <span class="fu">min</span>(Season)), <span class="fu">aes</span>(<span class="at">x=</span>Season <span class="sc">-</span> .<span class="dv">25</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Rdrs/yr</span><span class="st">`</span>, <span class="at">group=</span>Tm, <span class="at">label=</span>Tm)) <span class="sc">+</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">2022</span>, <span class="dv">2023</span>), <span class="at">limits=</span><span class="fu">c</span>(<span class="fl">2021.5</span>,<span class="fl">2023.5</span>)) <span class="sc">+</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Season"</span>, <span class="at">y=</span><span class="st">"DRS Above Avg per 1,200 Innings"</span>, <span class="at">title=</span><span class="st">"St. Louis plummeted defensively in 2023"</span>, <span class="at">subtitle=</span><span class="st">"The Cardinals went from the top of the league to being well-below average."</span>, <span class="at">caption=</span><span class="st">"Source: Baseball-Reference.com | By Bailey Waltke"</span>) <span class="sc">+</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>), </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>), </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
+</div>
+</div>
+</div>
+<p>Random stuff about pitching stats.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pitching2022 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Pitching2022.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pitching2023 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Pitching2023.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>goodpitching <span class="ot">&lt;-</span> pitching2022 <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2022</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>badpitching <span class="ot">&lt;-</span> pitching2023 <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2023</span>) </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pitching <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(goodpitching, badpitching)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>averagepitching <span class="ot">&lt;-</span> pitching <span class="sc">|&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Tm <span class="sc">==</span> <span class="st">"St. Louis Cardinals"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"Los Angeles Dodgers"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"Atlanta Braves"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"Philadelphia Phillies"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"San Diego Padres"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"New York Mets"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"Houston Astros"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"New York Yankees"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"Cleveland Guardians"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"Tampa Bay Rays"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"Minnesota Twins"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"Toronto Blue Jays"</span> <span class="sc">|</span> Tm <span class="sc">==</span> <span class="st">"League Average"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>averagepitching <span class="sc">|&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Tm, Season, <span class="st">`</span><span class="at">HardH%</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">HardH%</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">"%"</span>,<span class="st">""</span>, <span class="st">`</span><span class="at">HardH%</span><span class="st">`</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Season, <span class="at">values_from =</span> <span class="st">`</span><span class="at">HardH%</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="st">`</span><span class="at">2023</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<div id="pxaprzmuuq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pxaprzmuuq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#pxaprzmuuq thead, #pxaprzmuuq tbody, #pxaprzmuuq tfoot, #pxaprzmuuq tr, #pxaprzmuuq td, #pxaprzmuuq th {
+  border-style: none;
+}
+
+#pxaprzmuuq p {
+  margin: 0;
+  padding: 0;
+}
+
+#pxaprzmuuq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pxaprzmuuq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pxaprzmuuq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pxaprzmuuq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pxaprzmuuq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pxaprzmuuq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pxaprzmuuq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pxaprzmuuq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pxaprzmuuq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#pxaprzmuuq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pxaprzmuuq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pxaprzmuuq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pxaprzmuuq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pxaprzmuuq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pxaprzmuuq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxaprzmuuq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pxaprzmuuq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pxaprzmuuq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#pxaprzmuuq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxaprzmuuq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pxaprzmuuq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxaprzmuuq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pxaprzmuuq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxaprzmuuq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pxaprzmuuq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxaprzmuuq .gt_left {
+  text-align: left;
+}
+
+#pxaprzmuuq .gt_center {
+  text-align: center;
+}
+
+#pxaprzmuuq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pxaprzmuuq .gt_font_normal {
+  font-weight: normal;
+}
+
+#pxaprzmuuq .gt_font_bold {
+  font-weight: bold;
+}
+
+#pxaprzmuuq .gt_font_italic {
+  font-style: italic;
+}
+
+#pxaprzmuuq .gt_super {
+  font-size: 65%;
+}
+
+#pxaprzmuuq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#pxaprzmuuq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pxaprzmuuq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pxaprzmuuq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pxaprzmuuq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pxaprzmuuq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pxaprzmuuq .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="Tm" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Tm</th>
+<th id="2022" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">2022</th>
+<th id="2023" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">2023</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Tm">San Diego Padres</td>
+<td class="gt_row gt_right" headers="2022">38.4</td>
+<td class="gt_row gt_right" headers="2023">37.0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Tm">Philadelphia Phillies</td>
+<td class="gt_row gt_right" headers="2022">35.6</td>
+<td class="gt_row gt_right" headers="2023">37.7</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Tm">Los Angeles Dodgers</td>
+<td class="gt_row gt_right" headers="2022">34.5</td>
+<td class="gt_row gt_right" headers="2023">37.9</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Tm">Minnesota Twins</td>
+<td class="gt_row gt_right" headers="2022">38.6</td>
+<td class="gt_row gt_right" headers="2023">38.8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Tm">New York Yankees</td>
+<td class="gt_row gt_right" headers="2022">36.5</td>
+<td class="gt_row gt_right" headers="2023">38.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Tm">Atlanta Braves</td>
+<td class="gt_row gt_right" headers="2022">37.2</td>
+<td class="gt_row gt_right" headers="2023">38.9</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Tm">Tampa Bay Rays</td>
+<td class="gt_row gt_right" headers="2022">36.2</td>
+<td class="gt_row gt_right" headers="2023">39.0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Tm">League Average</td>
+<td class="gt_row gt_right" headers="2022">38.5</td>
+<td class="gt_row gt_right" headers="2023">39.5</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Tm">Toronto Blue Jays</td>
+<td class="gt_row gt_right" headers="2022">39.6</td>
+<td class="gt_row gt_right" headers="2023">39.9</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Tm">New York Mets</td>
+<td class="gt_row gt_right" headers="2022">38.1</td>
+<td class="gt_row gt_right" headers="2023">40.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Tm">Cleveland Guardians</td>
+<td class="gt_row gt_right" headers="2022">39.8</td>
+<td class="gt_row gt_right" headers="2023">40.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Tm">Houston Astros</td>
+<td class="gt_row gt_right" headers="2022">37.2</td>
+<td class="gt_row gt_right" headers="2023">40.4</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Tm">St. Louis Cardinals</td>
+<td class="gt_row gt_right" headers="2022">38.0</td>
+<td class="gt_row gt_right" headers="2023">41.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 </div>
