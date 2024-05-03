@@ -25,7 +25,7 @@
     "href": "posts/post-with-code/index.html",
     "title": "Post With Code",
     "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+    "text": "1 + 1\n\n[1] 2"
   },
   {
     "objectID": "posts/welcome/index.html",
@@ -39,6 +39,13 @@
     "href": "index.html",
     "title": "Latest posts",
     "section": "",
-    "text": "Why did the St. Louis Cardinals go from first to worst in 2023?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 12, 2024\n\n\nBailey Waltke\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nApr 1, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 1, 2024\n\n\nBailey Waltke\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMar 29, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Should the Seattle Seahawks have taken a quarterback in the 2024 NFL Draft?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMay 5, 2024\n\n\nBailey Waltke\n\n\n\n\n\n\n\n\n\n\n\n\nWhy did the St. Louis Cardinals go from first to worst in 2023?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 12, 2024\n\n\nBailey Waltke\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nApr 1, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApr 1, 2024\n\n\nBailey Waltke\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMar 29, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/should-the-seattle-seahawks-have-drafted-a-quarterback-in-this-years-draft/index.html",
+    "href": "posts/should-the-seattle-seahawks-have-drafted-a-quarterback-in-this-years-draft/index.html",
+    "title": "Should the Seattle Seahawks have taken a quarterback in the 2024 NFL Draft?",
+    "section": "",
+    "text": "Multiple intro paragraphs explaining how I believe Geno Smith to be mid.\n\n\nCode\nlibrary(tidyverse)\nlibrary(gt)\nlibrary(ggalt)\nlibrary(ggtext)\n\npassing2022 &lt;- read_csv(\"2022passing.csv\") |&gt;\n  mutate(Player = gsub(\"*\", \"\", Player, fixed = TRUE)) |&gt;\n  mutate(Player = gsub(\"+\", \"\", Player, fixed = TRUE))\npassing2023 &lt;- read_csv(\"2023passing.csv\") |&gt;\n  mutate(Player = gsub(\"*\", \"\", Player, fixed = TRUE)) |&gt;\n  mutate(Player = gsub(\"+\", \"\", Player, fixed = TRUE))\n\ntdint2022 &lt;- passing2022 |&gt;\n  select(Player, TD, Int, Att)\n\ntdint2023 &lt;- passing2023 |&gt;\n  select(Player, TD, Int, Att)\n\ntdintratio &lt;- bind_rows(tdint2022, tdint2023) |&gt;\n  group_by(Player) |&gt;\n  summarise(\n    totaltds = sum(TD),\n    totalints = sum(Int),\n    totalatts = sum(Att)\n  ) |&gt;\n  ungroup() |&gt;\n  top_n(20, wt=totalatts)\n\nggplot() + \n  geom_dumbbell(\n    data=tdintratio, \n    aes(y=reorder(Player, totaltds), x=totaltds, xend=totalints),\n    size = 2,\n    colour = \"grey\",\n    colour_x = \"green\",\n    colour_xend = \"red\") +\n  labs(\n    title=\"Geno Smith's ratio better than most\", \n    subtitle = \"Seattle's signal-caller did a good job throwing &lt;span style = 'color:green;'&gt;touchdowns&lt;/span&gt;, and he was above average when it came to limiting &lt;span style = 'color:red;'&gt;interceptions&lt;/span&gt; when compared to top quarterbacks.\",\n    x=\"Touchdowns vs Interceptions\",\n    y=\"\",\n    caption=\"Source: pro-football-reference.com | By Bailey Waltke\"\n  ) +\n  theme_minimal() + \n  theme(\n    plot.title = element_text(size = 20, face = \"bold\"),\n    axis.title = element_text(size = 8), \n    plot.subtitle = element_textbox_simple(size=10), \n    panel.grid.minor = element_blank(),\n    plot.title.position = \"plot\"\n    )"
   }
 ]
