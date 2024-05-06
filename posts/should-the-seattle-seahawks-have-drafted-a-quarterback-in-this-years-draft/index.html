@@ -185,7 +185,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Multiple intro paragraphs explaining how I believe Geno Smith to be mid.</p>
+<p>After trading franchise quarterback Russell Wilson to the Denver Broncos following the 2021-2022 NFL season, the Seattle Seahawks were assumed to be starting a rebuild. With journeyman Geno Smith as the best quarterback on the roster entering the new season, many people saw the ’22-’23 season as a lost cause for a potential top draft pick. Across four different teams, the veteran had only started five games in the previous six years combined. The season looked like it was going to be rough.</p>
+<p>Smith then defied expectations of everyone by leading the Seahawks to a 9-8 record and a playoff berth. In a season that saw him win NFL Comeback Player of the Year, he had a completion percentage of nearly 70% and threw 30 touchdown passes. The “rebuild” turned out to be nonexistent, as Seattle went into “win-now” mode by trying to build around their signal-caller.</p>
+<p>The following offseason, the Seahawks rewarded their quarterback with a three-year, $105 million contract extension. This seems all well and good, unless that was a one-off “fluke” year where players catch fire and find success, only to plummet back down to their norm in the next year. With how shaky Smith’s past performance had been prior to his breakout season, there was warranted skepticism around the league as to locking up the veteran for three years and giving him that much money.</p>
+<p>In the season that followed, Smith saw his numbers dip, but not very much. His past performance was going to be difficult to repeat, so it shouldn’t be a surprise he didn’t replicate that exact success. The Seahawks went 9-8 on the season, but they missed the playoffs via tiebreaker thanks to the Green Bay Packers.</p>
+<p>This offseason raised big questions regarding who would be the quarterback moving forward. While Smith still has two years left on his contract, he is already 33 years old. He also saw his production dip in his second year starting for Seattle, and another dip might really handicap the Seahawks’ aspirations to compete for a division title. Perhaps it is time to think about the team’s layout after Smith’s contract expires.</p>
+<p>During the offseason, Seattle swung a trade for former Washington Commanders quarterback Sam Howell, who is only 23 and coming off a season where he led the NFL in passing attempts and interceptions. This wasn’t the best showing for Howell, but he’s young and could definitely show improvement over time. However, trading for the young quarterback likely took the Seahawks out of contention for drafting a signal-caller in the upcoming draft. This year’s draft class was loaded with good quarterback prospects, but Seattle (not surprisingly) didn’t end up taking one.</p>
+<p>So, with a middling plan for the future, is Geno Smith really the franchise quarterback for the Seattle Seahawks? Has he done enough in the past two years to warrant being labeled as “their guy” for the foreseeable future?</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -193,53 +199,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalt)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>passing2022 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2022passing.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>passing2023 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2023passing.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>tdint2022 <span class="ot">&lt;-</span> passing2022 <span class="sc">|&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, TD, Int, Att)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>tdint2023 <span class="ot">&lt;-</span> passing2023 <span class="sc">|&gt;</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, TD, Int, Att)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>tdintratio <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(tdint2022, tdint2023) <span class="sc">|&gt;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Player) <span class="sc">|&gt;</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">totaltds =</span> <span class="fu">sum</span>(TD),</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalints =</span> <span class="fu">sum</span>(Int),</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalatts =</span> <span class="fu">sum</span>(Att)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">20</span>, <span class="at">wt=</span>totalatts)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dumbbell</span>(</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>tdintratio, </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">reorder</span>(Player, totaltds), <span class="at">x=</span>totaltds, <span class="at">xend=</span>totalints),</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"grey"</span>,</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_x =</span> <span class="st">"green"</span>,</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_xend =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Geno Smith's ratio better than most"</span>, </span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Seattle's signal-caller did a good job throwing &lt;span style = 'color:green;'&gt;touchdowns&lt;/span&gt;, and he was above average when it came to limiting &lt;span style = 'color:red;'&gt;interceptions&lt;/span&gt; when compared to top quarterbacks."</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Touchdowns vs Interceptions"</span>,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">""</span>,</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: pro-football-reference.com | By Bailey Waltke"</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>), </span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_textbox_simple</span>(<span class="at">size=</span><span class="dv">10</span>), </span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>passing2022 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2022passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>passing2023 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2023passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>tdint2022 <span class="ot">&lt;-</span> passing2022 <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, TD, Int, Att)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>tdint2023 <span class="ot">&lt;-</span> passing2023 <span class="sc">|&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, TD, Int, Att)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>tdintratio <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(tdint2022, tdint2023) <span class="sc">|&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Player) <span class="sc">|&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">totaltds =</span> <span class="fu">sum</span>(TD),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalints =</span> <span class="fu">sum</span>(Int),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalatts =</span> <span class="fu">sum</span>(Att)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">20</span>, <span class="at">wt=</span>totalatts)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dumbbell</span>(</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>tdintratio, </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">reorder</span>(Player, totaltds), <span class="at">x=</span>totaltds, <span class="at">xend=</span>totalints),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"grey"</span>,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_x =</span> <span class="st">"green"</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_xend =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"Geno Smith's ratio better than most"</span>, </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Seattle's signal-caller did a good job throwing &lt;span style = 'color:green;'&gt;touchdowns&lt;/span&gt;, and he was above average when it came to limiting &lt;span style = 'color:red;'&gt;interceptions&lt;/span&gt; when compared to top quarterbacks."</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">x=</span><span class="st">"Touchdowns vs Interceptions"</span>,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">y=</span><span class="st">""</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">"Source: pro-football-reference.com | By Bailey Waltke"</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>), </span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_textbox_simple</span>(<span class="at">size=</span><span class="dv">10</span>), </span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -249,6 +256,317 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>As shown above, there are only two quarterbacks over the past two years with as many touchdowns and fewer interceptions than Geno Smith: Joe Burrow and Jared Goff. So, while he may not be throwing as many touchdowns as someone like Patrick Mahomes or Josh Allen, he’s also being efficient with the football and not passing it to the other team as much.</p>
+<p>Counting stats don’t tell the whole story, however, as some quarterbacks simply throw the ball more than others. Seattle’s new backup Howell had over 100 more passing attempts last season than Smith did. So, how does Geno Smith’s numbers look when averaged, such as completion percentage and yards per attempt?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>comppercent2022 <span class="ot">&lt;-</span> passing2022 <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBrec, Cmp, Att, Yds...<span class="dv">12</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>comppercent2023 <span class="ot">&lt;-</span> passing2023 <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBrec, Cmp, Att, Yds...<span class="dv">12</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>comppercent <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(comppercent2022, comppercent2023) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(QBrec, <span class="at">into=</span><span class="fu">c</span>(<span class="st">"Wins"</span>, <span class="st">"Losses"</span>, <span class="st">"Ties"</span>), <span class="at">sep=</span><span class="st">"-"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wins =</span> <span class="fu">as.numeric</span>(Wins)) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Player) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalcompletions =</span> <span class="fu">sum</span>(Cmp),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalattempts =</span> <span class="fu">sum</span>(Att),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalyards =</span> <span class="fu">sum</span>(Yds),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalwins =</span> <span class="fu">sum</span>(Wins)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">CompPercent =</span> (totalcompletions<span class="sc">/</span>totalattempts) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">YperAtt =</span> totalyards<span class="sc">/</span>totalattempts</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(totalattempts <span class="sc">&gt;</span> <span class="dv">500</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>qbcomppercent <span class="ot">&lt;-</span> comppercent <span class="sc">|&gt;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Geno Smith"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Brock Purdy"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kyler Murray"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>comppercent, </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>CompPercent, <span class="at">y=</span>YperAtt, <span class="at">size=</span>totalwins), </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"grey"</span>, </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha=</span>.<span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>qbcomppercent, </span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>CompPercent, <span class="at">y=</span>YperAtt, <span class="at">size=</span>totalwins), </span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span> </span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">64.3</span>) <span class="sc">+</span> </span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">7.0</span>) <span class="sc">+</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>qbcomppercent, </span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>CompPercent, <span class="at">y=</span>YperAtt, <span class="at">label=</span>Player)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Geno Smith among the league's best"</span>, <span class="at">subtitle=</span><span class="st">"No. 7 stacks up well in completion percentage and yards per attempt, and he's </span><span class="sc">\n</span><span class="st">better than two other starters in the NFC West division."</span>, <span class="at">x=</span><span class="st">"Completion Percentage"</span>, <span class="at">y=</span><span class="st">"Yards per Attempt"</span>, <span class="at">caption=</span><span class="st">"Source: pro-football-reference | By Bailey Waltke"</span>)  <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>), </span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>), </span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Smith grades out well in these metrics, faring better than two of the quarterbacks within his division. While he isn’t necessarily topping these leaderboards, he’s showing overall capability to do what is necessary to lead Seattle’s offense.</p>
+<p>Now, what about regression? As players get older, they often see their production dip as a result. So, how have those older quarterbacks fared as they ventured toward their mid-30s? How does Smith’s numbers stack up?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>oldqbs23 <span class="ot">&lt;-</span> passing2023 <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Geno Smith"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kirk Cousins"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>oldqbs22 <span class="ot">&lt;-</span> passing2022 <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Geno Smith"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kirk Cousins"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2022</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>passing2021 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2021passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>passing2020 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2020passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>passing2019 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2019passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>passing2018 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2018passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>passing2017 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2017passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>passing2016 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2016passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>passing2015 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2015passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>passing2014 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2014passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>passing2013 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"2013passing.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"*"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Player =</span> <span class="fu">gsub</span>(<span class="st">"+"</span>, <span class="st">""</span>, Player, <span class="at">fixed =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>oldqbs21 <span class="ot">&lt;-</span> passing2021 <span class="sc">|&gt;</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kirk Cousins"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>oldqbs20 <span class="ot">&lt;-</span> passing2020 <span class="sc">|&gt;</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kirk Cousins"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>oldqbs19 <span class="ot">&lt;-</span> passing2019 <span class="sc">|&gt;</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2019</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>oldqbs18 <span class="ot">&lt;-</span> passing2018 <span class="sc">|&gt;</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2018</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>oldqbs17 <span class="ot">&lt;-</span> passing2017 <span class="sc">|&gt;</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2017</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>oldqbs16 <span class="ot">&lt;-</span> passing2016 <span class="sc">|&gt;</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Philip Rivers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2016</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>oldqbs15 <span class="ot">&lt;-</span> passing2015 <span class="sc">|&gt;</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Philip Rivers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2015</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>oldqbs14 <span class="ot">&lt;-</span> passing2014 <span class="sc">|&gt;</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Philip Rivers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2014</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>oldqbs13 <span class="ot">&lt;-</span> passing2013 <span class="sc">|&gt;</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Philip Rivers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2013</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Rate, Age)</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>oldqbrate <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(oldqbs23, oldqbs22, oldqbs21, oldqbs20, oldqbs19, oldqbs18, oldqbs17, oldqbs16, oldqbs15, oldqbs14, oldqbs13) </span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>geno <span class="ot">&lt;-</span> oldqbrate <span class="sc">|&gt;</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Geno Smith"</span>)</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>tannehill <span class="ot">&lt;-</span> oldqbrate <span class="sc">|&gt;</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span>)</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>bigben <span class="ot">&lt;-</span> oldqbrate <span class="sc">|&gt;</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span>)</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>dalton <span class="ot">&lt;-</span> oldqbrate <span class="sc">|&gt;</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span>)</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>fatheroftombrady <span class="ot">&lt;-</span> oldqbrate <span class="sc">|&gt;</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>)</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>oldqbrate, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>Rate, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>geno, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>Rate, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#002244"</span>) <span class="sc">+</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>tannehill, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>Rate, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#4B92DB"</span>) <span class="sc">+</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>bigben, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>Rate, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#FFB612"</span>) <span class="sc">+</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>dalton, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>Rate, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#D3BC8D"</span>) <span class="sc">+</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>fatheroftombrady, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>Rate, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#A71930"</span>) <span class="sc">+</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">65</span>, <span class="dv">70</span>, <span class="dv">75</span>, <span class="dv">80</span>, <span class="dv">85</span>, <span class="dv">90</span>, <span class="dv">95</span>, <span class="dv">100</span>, <span class="dv">105</span>, <span class="dv">110</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">68</span>, <span class="dv">110</span>)) <span class="sc">+</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>  <span class="at">title=</span><span class="st">"The regression of Seattle's QB looks normal"</span>, </span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>  <span class="at">subtitle =</span> <span class="st">"&lt;span style = 'color:#002244;'&gt;Geno Smith&lt;/span&gt; saw his passer rate drop last year, putting his numbers in a similar spot to many previous quarterbacks to play through their age-35 season."</span>, </span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"Passer Rating"</span>,</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">"Source: pro-football-reference | By Bailey Waltke"</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span>(</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>), </span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.subtitle =</span> <span class="fu">element_textbox_simple</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>qbrold23 <span class="ot">&lt;-</span> passing2023 <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Geno Smith"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kirk Cousins"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>qbrold22 <span class="ot">&lt;-</span> passing2022 <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Geno Smith"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kirk Cousins"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2022</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>qbrold21 <span class="ot">&lt;-</span> passing2021 <span class="sc">|&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kirk Cousins"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>qbrold20 <span class="ot">&lt;-</span> passing2020 <span class="sc">|&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Kirk Cousins"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ryan Tannehill"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>qbrold19 <span class="ot">&lt;-</span> passing2019 <span class="sc">|&gt;</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2019</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>qbrold18 <span class="ot">&lt;-</span> passing2018 <span class="sc">|&gt;</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2018</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>qbrold17 <span class="ot">&lt;-</span> passing2017 <span class="sc">|&gt;</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2017</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>qbrold16 <span class="ot">&lt;-</span> passing2016 <span class="sc">|&gt;</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Philip Rivers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2016</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>qbrold15 <span class="ot">&lt;-</span> passing2015 <span class="sc">|&gt;</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Philip Rivers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2015</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>qbrold14 <span class="ot">&lt;-</span> passing2014 <span class="sc">|&gt;</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Ben Roethlisberger"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Philip Rivers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2014</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>qbrold13 <span class="ot">&lt;-</span> passing2013 <span class="sc">|&gt;</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Philip Rivers"</span> <span class="sc">|</span> Player <span class="sc">==</span> <span class="st">"Eli Manning"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Season =</span> <span class="dv">2013</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, QBR, Age)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>qbrold <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(qbrold23, qbrold22, qbrold21, qbrold20, qbrold19, qbrold18, qbrold17, qbrold16, qbrold15, qbrold14, qbrold13)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>genoqbr <span class="ot">&lt;-</span> qbrold <span class="sc">|&gt;</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Geno Smith"</span>)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>daltonqbr <span class="ot">&lt;-</span> qbrold <span class="sc">|&gt;</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Andy Dalton"</span>)</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>russqbr <span class="ot">&lt;-</span> qbrold <span class="sc">|&gt;</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Russell Wilson"</span>)</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>aaronqbr <span class="ot">&lt;-</span> qbrold <span class="sc">|&gt;</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Aaron Rodgers"</span>)</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>mattryanqbr <span class="ot">&lt;-</span> qbrold <span class="sc">|&gt;</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Matt Ryan"</span>)</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>staffordqbr <span class="ot">&lt;-</span> qbrold <span class="sc">|&gt;</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Player <span class="sc">==</span> <span class="st">"Matthew Stafford"</span>)</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>qbrold, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>QBR, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>genoqbr, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>QBR, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#002244"</span>) <span class="sc">+</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>daltonqbr, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>QBR, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#D3BC8D"</span>) <span class="sc">+</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>russqbr, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>QBR, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#FB4F14"</span>) <span class="sc">+</span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>aaronqbr, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>QBR, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#203731"</span>) <span class="sc">+</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>mattryanqbr, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>QBR, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#A71930"</span>) <span class="sc">+</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>staffordqbr, <span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>QBR, <span class="at">group=</span>Player), <span class="at">color=</span><span class="st">"#003594"</span>) <span class="sc">+</span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">55</span>, <span class="dv">60</span>, <span class="dv">65</span>, <span class="dv">70</span>, <span class="dv">75</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">75</span>)) <span class="sc">+</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>  <span class="at">title=</span><span class="st">"QBR yields similar results for Geno Smith"</span>, </span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>  <span class="at">subtitle =</span> <span class="st">"Much like with passer rating, &lt;span style = 'color:#002244;'&gt;Geno Smith&lt;/span&gt; has a QBR that puts him among seasoned veteran quarterbacks in recent history."</span>, </span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"QB Rate"</span>,</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">"Source: pro-football-reference | By Bailey Waltke"</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span>(</span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>), </span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.subtitle =</span> <span class="fu">element_textbox_simple</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title.position =</span> <span class="st">"plot"</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As many of the past quarterbacks to play to their age-35 season have seen their numbers stay consistent, there shouldn’t be much panic about Smith entering the ’24-’25 NFL season. However, this upcoming campaign will be an important one for his future with the organization beyond his current contract.</p>
+<p>If his numbers stay in line with his production the past two years, then perhaps Seattle has found their guy beyond what he’s already under contract for. If his numbers dip even more from where they were last season, then perhaps a changing of the guard will be set up beyond Smith’s contract.</p>
 
 
 
